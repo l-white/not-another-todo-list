@@ -22,34 +22,35 @@ function addListAfterKeypress(e) {
     }
 }
 
+function toggleDoneClass() {
+    this.classList.toggle("done");
+}
+
+function removeListItemAndButton() {
+    this.previousSibling.remove();
+    this.remove();
+}
+
 // Turn "done" class on and off
 for (var i = 0; i < listItems.length; i++) {
-    listItems[i].addEventListener("click", function() {
-        this.classList.toggle("done"); 
-    });
+    listItems[i].addEventListener("click", toggleDoneClass);
 }
 
 // Delete Buttons
 for (var i = 0; i < deleteButtons.length; i++) {
-    deleteButtons[i].addEventListener("click", function() {
-        this.previousSibling.remove();
-        this.remove();
-    });
+    deleteButtons[i].addEventListener("click", removeListItemAndButton);
 }
 
 // Create New List Item and Button
 function createListElement() {
     var li = document.createElement("li");
     li.appendChild(document.createTextNode(input.value));
-    ul.appendChild(li);
+    ul.appendChild(li).addEventListener("click", toggleDoneClass);
     var btn = document.createElement("BUTTON");
     btn.textContent = "Delete";
     btn.className = "deleteItem";
     body.appendChild(btn);
-    ul.appendChild(btn).addEventListener("click", function() { 
-        this.previousSibling.remove();
-        this.remove();
-    });
+    ul.appendChild(btn).addEventListener("click", removeListItemAndButton);
     input.value = "";
 }
 
